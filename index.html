@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hola Dulce!!!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    .mensaje {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .mensaje h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .mensaje p {
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .firma {
+      margin-top: 25px;
+      font-style: italic;
+    }
+
+    .botones {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .botones button {
+      margin: 8px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 30px;
+      background: #6200ea;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .botones button:hover {
+      background: #3700b3;
+    }
+
+    #chat {
+      max-width: 700px;
+      margin: 30px auto 0;
+      background: #ffffffdd;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .burbuja {
+      max-width: 75%;
+      padding: 12px 18px;
+      margin: 10px;
+      border-radius: 20px;
+      display: inline-block;
+      clear: both;
+      word-wrap: break-word;
+      animation: aparecer 0.3s ease;
+    }
+
+    .burbuja.yo {
+      background: #d1f5d3;
+      float: right;
+      text-align: right;
+    }
+
+    .burbuja.ella {
+      background: #f3f3f3;
+      border: 1px solid #ccc;
+      float: left;
+      text-align: left;
+    }
+
+    #entrada {
+      max-width: 700px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #inputMensaje {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      width: 100%;
+      resize: none;
+      height: 60px;
+      font-size: 16px;
+    }
+
+    #entrada button {
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: #03dac6;
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #entrada button:hover {
+      background: #018786;
+      color: white;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #rechazo {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #555;
+      text-align: center;
+    }
+
+    .reinicio {
+      display: block;
+      margin: 40px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      background: #b00020;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .reinicio:hover {
+      background: #7f0000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mensaje">
+    <h1>Hola, Dulce 🌷</h1>
+    <p>No quiero parecer raro... solo quería saludarte 😊</p>
+    <p>Me animé a enviarte solicitud porque me pareciste una persona interesante, con una vibra muy linda.</p>
+    <p>Si algún día te gustaría platicar, con gusto estaré aquí.</p>
+    <p class="firma">Un saludo sincero,<br /><strong>Alguien con buenas intenciones 🙋‍♂️</strong></p>
+
+    <div class="botones">
+      <button class="btn-si" onclick="mostrarConversacion()">Sí, me gustaría platicar 😊</button>
+      <button class="btn-no" onclick="mostrarRechazo()">Prefiero no, gracias 🙏</button>
+    </div>
+
+    <div class="rechazo" id="rechazo" style="display:none">
+      <p>Lo entiendo totalmente, gracias por leer hasta aquí 😊 Te deseo lo mejor siempre 🌼</p>
+    </div>
+  </div>
+
+  <section id="chat" style="display:none;">
+    <!-- Conversación aquí -->
+  </section>
+
+  <div id="entrada" style="display:none;">
+    <textarea id="inputMensaje" placeholder="Escribe aquí..."></textarea><br>
+    <button onclick="enviarMensaje('yo')">Hablar yo 🧍‍♂️</button>
+    <button onclick="enviarMensaje('ella')">Hablar ella 🧍‍♀️</button>
+  </div>
+
+  <!-- <button class="reinicio" onclick="reiniciarChat()">🔄 Reiniciar conversación</button>-->
+
+  <script>
+    function mostrarConversacion() {
+      document.querySelector('.mensaje').remove();
+      document.getElementById('chat').style.display = 'block';
+      document.getElementById('entrada').style.display = 'flex';
+    }
+
+    function mostrarRechazo() {
+      document.getElementById('rechazo').style.display = 'block';
+    }
+
+    function enviarMensaje(quien) {
+      const texto = document.getElementById('inputMensaje').value.trim();
+      if (!texto) return;
+
+      const chat = document.getElementById('chat');
+      const burbuja = document.createElement('div');
+      burbuja.className = 'burbuja ' + quien;
+      burbuja.textContent = texto;
+
+      chat.appendChild(burbuja);
+      document.getElementById('inputMensaje').value = '';
+      chat.scrollTop = chat.scrollHeight;
+
+      guardarMensajes();
+    }
+
+    function guardarMensajes() {
+      localStorage.setItem('mensajesChat', document.getElementById('chat').innerHTML);
+    }
+
+    function reiniciarChat() {
+      localStorage.removeItem('mensajesChat');
+      location.reload();
+    }
+
+    window.onload = function () {
+      const guardado = localStorage.getItem('mensajesChat');
+      if (guardado) {
+        document.getElementById('chat').innerHTML = guardado;
+        document.getElementById('chat').style.display = 'block';
+        document.getElementById('entrada').style.display = 'flex';
+      }
+    }
+  </script>
+
+</body>
+</html>
